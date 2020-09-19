@@ -1,13 +1,15 @@
-package main
+package stand
 
 import (
 	"fmt"
+	"io"
 	"os"
 	"path"
 	"path/filepath"
+	"testing"
 )
 
-func main() {
+func Test_File01(t *testing.T) {
 	/*
 		文件操作：
 		1.路径：
@@ -38,14 +40,14 @@ func main() {
 			os.RemoveAll()，删除所有
 	*/
 	//1.路径
-	fileName1:="/tmp/aa.txt"
-	fileName2:="bb.txt"
+	fileName1 := "/tmp/aa.txt"
+	fileName2 := "bb.txt"
 	fmt.Println(filepath.IsAbs(fileName1)) //true
 	fmt.Println(filepath.IsAbs(fileName2)) //false
 	fmt.Println(filepath.Abs(fileName1))
 	fmt.Println(filepath.Abs(fileName2))
 
-	fmt.Println("获取父目录：",path.Join(fileName1,".."))
+	fmt.Println("获取父目录：", path.Join(fileName1, ".."))
 
 	//2.创建目录
 	//err := os.Mkdir("/Users/ruby/Documents/pro/a/bb",os.ModePerm)
@@ -119,10 +121,95 @@ func main() {
 	//}
 	//fmt.Println("删除文件成功。。")
 	//删除目录
-	err :=  os.RemoveAll("/Users/ruby/Documents/pro/a/cc")
-	if err != nil{
-		fmt.Println("err:",err)
+	err := os.RemoveAll("/Users/ruby/Documents/pro/a/cc")
+	if err != nil {
+		fmt.Println("err:", err)
 		return
 	}
 	fmt.Println("删除目录成功。。")
+}
+
+func Test_File02(t *testing.T) {
+	/*
+		FileInfo：文件信息
+			interface
+				Name()，文件名
+				Size()，文件大小，字节为单位
+				IsDir()，是否是目录
+				ModTime()，修改时间
+				Mode()，权限
+	*/
+	fileInfo, err := os.Stat("/Users/chenqiangjun/gocode/src/go-standard-library/go.mod")
+	if err != nil {
+		fmt.Println("err :", err)
+		return
+	}
+	fmt.Printf("%T\n", fileInfo)
+	//文件名
+	fmt.Println(fileInfo.Name())
+	//文件大小
+	fmt.Println(fileInfo.Size())
+	//是否是目录
+	fmt.Println(fileInfo.IsDir()) //IsDirectory
+	//修改时间
+	fmt.Println(fileInfo.ModTime())
+	//权限
+	fmt.Println(fileInfo.Mode()) //-rw-r--r--
+}
+
+func Test_readFile(t *testing.T) {
+	/*
+		读取数据：
+			Reader接口：
+				Read(p []byte)(n int, error)
+	*/
+	//读取本地aa.txt文件中的数据
+	//step1：打开文件
+	fileName := "/Users/chenqiangjun/gocode/src/go-standard-library/go.mod"
+	file, err := os.Open(fileName)
+	if err != nil {
+		fmt.Println("err:", err)
+		return
+	}
+	//step3：关闭文件
+	defer file.Close()
+
+	//step2：读取数据
+	bs := make([]byte, 4, 4)
+	/*
+		 //第一次读取
+		 n,err :=file.Read(bs)
+		 fmt.Println(err) //<nil>
+		 fmt.Println(n) //4
+		 fmt.Println(bs) //[97 98 99 100]
+		fmt.Println(string(bs)) //abcd
+
+		//第二次读取
+		n,err = file.Read(bs)
+		fmt.Println(err)//<nil>
+		fmt.Println(n)//4
+		fmt.Println(bs) //[101 102 103 104]
+		fmt.Println(string(bs)) //efgh
+
+		//第三次读取
+		n,err = file.Read(bs)
+		fmt.Println(err) //<nil>
+		fmt.Println(n) //2
+		fmt.Println(bs) //[105 106 103 104]
+		fmt.Println(string(bs)) //ijgh
+
+		//第四次读取
+		n,err = file.Read(bs)
+		fmt.Println(err) //EOF
+		fmt.Println(n) //0
+	*/
+	n := -1
+	for {
+		n, err = file.Read(bs)
+		if n == 0 || err == io.EOF {
+			fmt.Println("读取到了文件的末尾，结束读取操作。。")
+			break
+		}
+		fmt.Println(string(bs[:n]))
+	}
 }
