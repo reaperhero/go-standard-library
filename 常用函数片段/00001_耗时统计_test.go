@@ -1,4 +1,4 @@
-package commandfun
+package command
 
 import (
 	"fmt"
@@ -13,3 +13,7 @@ func timeCost() func() {
 		fmt.Printf("time cost = %v\n", tc)
 	}
 }
+
+
+
+
