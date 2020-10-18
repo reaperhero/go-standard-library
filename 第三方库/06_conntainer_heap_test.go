@@ -35,9 +35,15 @@ func Test_container_01(t *testing.T) {
 	}
 }
 
-// 此示例演示使用堆接口构建的优先级队列。
 
-// item是我们在优先队列中管理的item。
+
+
+
+
+
+
+
+// 堆接口构建的优先级队列,item是我们在优先队列中管理的item。
 type Item struct {
 	value    string // item的值；任意取值。
 	priority int    // 队列中项目的优先级。
