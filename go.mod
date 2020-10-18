@@ -16,6 +16,7 @@ require (
 	github.com/kr/pretty v0.2.1 // indirect
 	github.com/onsi/ginkgo v1.14.2 // indirect
 	github.com/onsi/gomega v1.10.3 // indirect
+	github.com/segmentio/kafka-go v0.2.2
 	github.com/sirupsen/logrus v1.6.0
 	github.com/tidwall/gjson v1.6.1
 	google.golang.org/appengine v1.6.6 // indirect
