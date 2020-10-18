@@ -5,10 +5,10 @@ import (
 	"testing"
 )
 
-const json = `{"name":{"first":"Janet","last":"Prichard"},"age":47}`
+const jsonstr = `{"name":{"first":"Janet","last":"Prichard"},"age":47}`
 
 func Test_gjson_01(t *testing.T) {
-	value := gjson.Get(json, "name.last")
+	value := gjson.Get(jsonstr, "name.last")
 	println(value.String())
 }
 
