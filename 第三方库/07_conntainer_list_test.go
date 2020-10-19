@@ -6,6 +6,9 @@ import (
 	"testing"
 )
 
+// https://cloud.tencent.com/developer/section/1140666
+
+
 // 双向链接列表
 func Test_container_03(t *testing.T) {
 	// 创建一个新列表并在其中添加一些数字。
@@ -20,3 +23,5 @@ func Test_container_03(t *testing.T) {
 		fmt.Println(e.Value)
 	}
 }
+
+
