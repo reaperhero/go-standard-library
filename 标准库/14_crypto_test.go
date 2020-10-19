@@ -6,8 +6,6 @@ import (
 	"testing"
 )
 
-
-
 func Test_bcrypt(t *testing.T) {
 	type User struct {
 		Name     string `json:"name"`
@@ -21,7 +19,7 @@ func Test_bcrypt(t *testing.T) {
 		fmt.Println(err)
 	}
 	encodePWD := string(hash) // 保存在数据库的密码，虽然每次生成都不同，只需保存一份即可
-	fmt.Println(encodePWD)
+	fmt.Println(encodePWD)    // $2a$10$cByBWdGAOhOmg3JUDm8ltuX2fDxIf1FZ0uXYkorS3T9nwoJ1awd3m
 
 	fmt.Println("====模拟登录====")
 	u1 := User{}
@@ -32,7 +30,7 @@ func Test_bcrypt(t *testing.T) {
 	if err != nil {
 		fmt.Println("pwd wrong")
 	} else {
-		fmt.Println("pwd ok")
+		fmt.Println("pwd ok") //
 	}
 
 }
