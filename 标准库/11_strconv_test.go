@@ -12,8 +12,7 @@ package stand
 // func Itoa(i int) string
 
 
-// 二、Parse系列函数
-
+// 二、Parse
 
 // 返回字符串表示的bool值。它接受1、0、t、f、T、F、true、false、True、False、TRUE、FALSE；否则返回错误。
 // func ParseBool(str string) (value bool, err error)
@@ -28,3 +27,12 @@ package stand
 
 // 解析一个表示浮点数的字符串并返回其值。
 // func ParseFloat(s string, bitSize int) (f float64, err error)
+
+
+
+// 三、 Format
+//  FormatBool，FormatFloat，FormatInt 和  FormatUint将值转换为字符串
+//s := strconv.FormatBool(true)
+//s := strconv.FormatFloat(3.1415, 'E', -1, 64)
+//s := strconv.FormatInt(-42, 16)
+//s := strconv.FormatUint(42, 16)
