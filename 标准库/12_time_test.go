@@ -17,7 +17,7 @@ func formatDemo() {
 	fmt.Println(now.Format("2006/01/02"))
 }
 
-func parseStringtime()  {
+func parseStringtime() {
 	// 加载时区
 	loc, err := time.LoadLocation("Asia/Shanghai")
 	if err != nil {
@@ -34,7 +34,6 @@ func parseStringtime()  {
 	fmt.Println(timeObj.Sub(time.Now()))
 }
 
-
 func timeDemo() {
 	now := time.Now() //获取当前时间
 	fmt.Printf("current time:%v\n", now)
@@ -47,7 +46,6 @@ func timeDemo() {
 	second := now.Second() //秒
 	fmt.Printf("%d-%02d-%02d %02d:%02d:%02d\n", year, month, day, hour, minute, second)
 }
-
 
 // 基于时间对象获取时间戳
 func timestampDemo() {
@@ -71,24 +69,21 @@ func timestampDemo2(timestamp int64) {
 	fmt.Printf("%d-%02d-%02d %02d:%02d:%02d\n", year, month, day, hour, minute, second)
 }
 
-
-
 // 时间操作
 func timestampDemo3() {
 	now := time.Now()
-	now.Add(time.Hour)  // 返回一个小时之后的时间
-
+	now.Add(time.Hour)               // 返回一个小时之后的时间
+	time.Now().Add(-time.Minute * 5) // 返回五分钟前的时间
 }
+
 // func (t Time) Sub(u Time) Duration   求两个时间之间的差值
 // func (t Time) Before(u Time) bool    如果t代表的时间点在u之前，返回真；否则返回假。
 // func (t Time) After(u Time) bool     如果t代表的时间点在u之后，返回真；否则返回假。
-
-
 
 // 定时器
 func tickDemo() {
 	ticker := time.Tick(time.Second) //定义一个1秒间隔的定时器,本质上是一个通道（channel）
 	for i := range ticker {
-		fmt.Println(i)//每秒都会执行的任务
+		fmt.Println(i) //每秒都会执行的任务
 	}
 }

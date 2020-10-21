@@ -1,5 +1,9 @@
 package third
 
+//import (
+//"github.com/sirupsen/logrus"
+//)
+
 // # 搭建框架
 // 一、main
 //func initLogger() {
