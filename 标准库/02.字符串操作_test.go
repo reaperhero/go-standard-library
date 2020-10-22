@@ -54,14 +54,40 @@ func Test_String01(t *testing.T) {
 	fmt.Println(strings.ToLower(s7))
 	fmt.Println(strings.ToUpper(s7))
 
-	/*
-		截取子串：
-		substring(start,end)-->substr
-		str[start:end]-->substr
-			包含start，不包含end下标
-	*/
 	fmt.Println(s1)
 	s8 := s1[:5]
 	fmt.Println(s8)
 	fmt.Println(s1[5:])
+}
+
+
+// str := "Yinzhengjie"
+// fmt.Println(strings.EqualFold(str,"YINZHENGJIE")) //忽略大小写，但是如果除了大小写的差异之外，还有其他的差异就会判定为false.
+//fmt.Println(strings.HasPrefix(str,"Yinz"))         //判断字符串是否以Yinz开头
+//fmt.Println(strings.HasSuffix(str,"jie"))       //判断字符串是否以“到此一游”结尾
+
+
+// name := "yinzhengjie"
+// str := "尹正杰到此一游"
+// fmt.Println(strings.Index(str,"杰")) //注意，一个汉字战友三个字节，在“杰”前面有2个汉字，占据了0-5的索引，因此“杰”所对应的下班索引应该是“6”
+// fmt.Println(strings.Index(name,"i"))  //找到第一个匹配到的“i”的索引下标。
+//fmt.Println(strings.Index(name,"haha")) //如果没有找到的话就会返回“-1”
+// list := strings.Split(name,"i")  //表示以字符串中的字母“i”为分隔符，将这个字符串进行分离,i被删除
+// fmt.Println(strings.SplitAfter(name,"i"))  //SplitAfter这个方法表示在字符串中的字母“i”之后进行切割， 但是并不会覆盖到字母“i”,这一点跟Split方法是有所不同的哟！
+
+// str := "#尹#正#杰#is#a#good#boy#"
+// fmt.Println(strings.Trim(str,"#"))  //该方法可以去掉字符串左右两边的符号，但是字符串之间的是去不掉“#”的哟
+// strings.TrimSpace(str))  //该方法可以脱去两边的空格和换行符。
+
+func Test_string_03(t *testing.T)  {
+	str := `{"level":"info","msg":"\ufffd强军告警测\ufffd {\"sessionId\":\"haBhCtroXrRF7kQtJaOVYYeu\",\"alarmStatus\":\"1\",\"alarmType\":\"metric\",\"alarmObjInfo\":{\"region\":\"sh\",\"namespace\":\"qce/cvm\",\"dimensions\":{\"deviceName\":\"prod-myun-tx-mixer-tmp005\",\"objId\":\"5d62a04b-60f7-4587-aa6c-7c5efc630087\",\"objName\":\"10.200.1.2#3983277\",\"unInstanceId\":\"ins-0swvuraf\"}},\"alarmPolicyInfo\":{\"policyId\":\"policy-8dyufjzp\",\"policyType\":\"cvm_device\",\"policyName\":\"陈强军告警测试\",\"policyTypeCName\":\"云服务器-基础监控\",\"policyTypeEname\":\"\",\"conditions\":{\"metricName\":\"disk_usage\",\"metricShowName\":\"磁盘利用率 \",\"calcType\":\"\u003e\",\"calcValue\":\"10\",\"currentValue\":\"10.009\",\"unit\":\"%\",\"period\":\"300\",\"periodNum\":\"300\",\"alarmNotifyType\":\"singleAlarm\",\"alarmNotifyPeriod\":1}},\"firstOccurTime\":\"2020-10-21 13:10:00\",\"durationTime\":0,\"recoverTime\":\"0\"}\n","time":"2020-10-21T13:11:33+08:00"}`
+	result := strings.SplitAfterN(str,"{",10)
+	str1 := strings.Join(result[2:],"")
+	result = strings.SplitAfterN(str1,"}",10)
+	str2 := []string{"{"}
+	for i := 0;i < len(result)-2;i++ {
+		str2 = append(str2,result[i])
+	}
+	msg := strings.Replace(strings.Join(str2,""),"\\","",-1)
+	fmt.Println(msg)
 }

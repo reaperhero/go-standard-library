@@ -2,6 +2,7 @@ package stand
 
 import (
 	"fmt"
+	"testing"
 	"time"
 )
 
@@ -86,4 +87,23 @@ func tickDemo() {
 	for i := range ticker {
 		fmt.Println(i) //每秒都会执行的任务
 	}
+}
+
+func Test_ticker_timeout(t *testing.T) {
+	timer1 := time.NewTimer(time.Second * 2)
+	<-timer1.C // 2秒后可以读到值
+	fmt.Println("Timer 1 expired")
+
+
+	timer2 := time.NewTimer(time.Second)
+	go func() {
+		<-timer2.C // 被取消后，下面不会执行
+		fmt.Println("Timer 2 expired")
+	}()
+	stop2 := timer2.Stop()
+	if stop2 {
+		fmt.Println("Timer 2 stopped")
+	}
+
+
 }
