@@ -27,15 +27,14 @@ func Test_woork_pool(t *testing.T) {
 	for j := 1; j <= 5; j++ {
 		jobs <- j
 	}
-	close(jobs)
-	var found = true
-	for found {
+ForEnd:
+	for {
 		select {
-		case value := <- results:
+		case value := <-results:
 			fmt.Println(value)
-		case <- time.Tick(time.Second * 2):
+		case <-time.Tick(time.Second * 3):
 			fmt.Println("end")
-			found = false
+			break ForEnd
 		}
 	}
 }
