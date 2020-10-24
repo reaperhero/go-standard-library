@@ -31,3 +31,19 @@ func Test_Wg_01(t *testing.T) {
 
 	fmt.Println("exit main")
 }
+
+
+
+func Test_Wg_02(t *testing.T) {
+	hello := func(wg *sync.WaitGroup,id int) {
+		defer wg.Done()
+		fmt.Println(id)
+	}
+	const numGreeters = 5
+	var wg sync.WaitGroup
+	wg.Add(numGreeters) // 必须保证Add在Wait之前就准备好了
+	for i := 0; i < numGreeters; i++ {
+		hello(&wg,i)
+	}
+	wg.Wait()
+}

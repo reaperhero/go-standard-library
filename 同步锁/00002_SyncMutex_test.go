@@ -76,3 +76,7 @@ func Test_RWMutex_01(t *testing.T) {
 	wg.Wait()
 	fmt.Println("main goroutine end")
 }
+
+
+
+

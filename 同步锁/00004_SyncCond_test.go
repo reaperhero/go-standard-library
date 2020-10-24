@@ -34,3 +34,68 @@ func Test_Cond_01(t *testing.T) {
 	fmt.Println("Broadcast...")
 	time.Sleep(time.Second * 1) // 睡眠1秒，等待所有goroutine执行完毕
 }
+
+// 固定长度为2的队列，并且我们要将10个元素放入队列中。 我们希望一有空间就能放入，所以在队列中有空间时需要立刻通知:
+func Test_Cond_02(t *testing.T) {
+	c := sync.NewCond(&sync.Mutex{})
+	queue := make([]interface{}, 0, 10)
+	removeFromQueue := func(delay time.Duration) {
+		time.Sleep(delay)
+		c.L.Lock()
+		queue = queue[1:]
+		fmt.Println("remove from queue")
+		c.L.Unlock()
+		c.Signal()
+	}
+
+	for i := 0; i < 10; i++ {
+		c.L.Lock()
+		if len(queue) == 2 {
+			// Wait的调用不仅仅是阻塞，它暂停当前的goroutine， 允许其他goroutine在操作系统线程上运行。
+			// 进入Wait后， Cond的变量Locker将调用Unlock，并在退出Wait时，Cond变量的Locker上会调用Lock
+			c.Wait()
+		}
+		fmt.Println("add to queue")
+		queue = append(queue, struct{}{})
+		go removeFromQueue(time.Second * 1)
+		c.L.Unlock()
+	}
+}
+
+// Broadcast 通知
+func Test_Cond_03(t *testing.T) {
+	type button struct {
+		click *sync.Cond
+	}
+
+	subscribe := func(c *sync.Cond, fn func()) {
+		var tempwg sync.WaitGroup
+		tempwg.Add(1)
+		go func() {
+			tempwg.Done()
+			c.L.Lock()
+			defer c.L.Unlock()
+			c.Wait()
+			fn()
+		}()
+		tempwg.Wait()
+	}
+	var wg sync.WaitGroup
+	buttoninstance := button{click: sync.NewCond(&sync.Mutex{})}
+	wg.Add(3)
+	subscribe(buttoninstance.click, func() {
+		fmt.Println("maximzing windows")
+		wg.Done()
+	})
+	subscribe(buttoninstance.click, func() {
+		fmt.Println("display annoying  dialog box")
+		wg.Done()
+	})
+	subscribe(buttoninstance.click, func() {
+		fmt.Println("miuse leave")
+		wg.Done()
+	})
+	buttoninstance.click.Broadcast()
+	wg.Wait()
+
+}
