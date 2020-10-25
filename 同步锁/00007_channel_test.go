@@ -2,6 +2,7 @@ package syncmutex
 
 import (
 	"fmt"
+	"sync"
 	"testing"
 )
 
@@ -159,15 +160,49 @@ func Test_channel_04(t *testing.T) {
 // 多个函数可以同时从一个channel接收数据，直到channel关闭，这种情况被称作扇出
 // 一个函数同时接收并处理多个channel输入并转化为一个输出channel，直到所有的输入channel都关闭后，关闭输出channel，这种情况就被称作扇入。
 
-
 // or-done-channel
 // 需要用select语句来封装我 们的读取操作和done通道
-
 
 // tee-channel
 // 分割来自通道的多个值，以便将它们发送到两个独立区域
 
-
-
 // bridge-channel
 // 自己想要使用一系列通道的值
+
+// safe workpool
+
+func Test_simple_work_01(t *testing.T) {
+
+	worker := func(id int, jobs <-chan int, results chan<- int, wg *sync.WaitGroup) {
+		defer wg.Done()
+		for j := range jobs {
+			fmt.Println("worker", id, "started  job", j)
+			fmt.Println("worker", id, "finished job", j)
+			results <- j * 2
+		}
+	}
+	jobs := make(chan int, 100)
+	results := make(chan int, 100)
+	wg := new(sync.WaitGroup)
+
+	for i := 0; i < 3; i++ {
+		wg.Add(1)
+		go worker(i, jobs, results, wg)
+	}
+
+	for j := 0; j < 5; j++ {
+		jobs <- j
+	}
+	close(jobs)
+
+	go func(wg *sync.WaitGroup, results chan int) {
+		fmt.Println("waiting")
+		wg.Wait() // GOOD
+		fmt.Println("done waiting")
+		close(results)
+	}(wg, results)
+
+	for r := range results {
+		fmt.Println(r)
+	}
+}

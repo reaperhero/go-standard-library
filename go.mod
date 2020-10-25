@@ -21,6 +21,7 @@ require (
 	github.com/pierrec/lz4 v2.5.2+incompatible // indirect
 	github.com/segmentio/kafka-go v0.2.2
 	github.com/sirupsen/logrus v1.6.0
+	github.com/spaolacci/murmur3 v1.1.0
 	github.com/tealeg/xlsx v1.0.5
 	github.com/tidwall/gjson v1.6.1
 	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9

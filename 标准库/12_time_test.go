@@ -94,7 +94,6 @@ func Test_ticker_timeout(t *testing.T) {
 	<-timer1.C // 2秒后可以读到值
 	fmt.Println("Timer 1 expired")
 
-
 	timer2 := time.NewTimer(time.Second)
 	go func() {
 		<-timer2.C // 被取消后，下面不会执行
@@ -104,6 +103,43 @@ func Test_ticker_timeout(t *testing.T) {
 	if stop2 {
 		fmt.Println("Timer 2 stopped")
 	}
+}
 
+func Test_ticker_timeout_02(t *testing.T) {
+	var msg string
+	ch := make(chan string, 1)
+	defer close(ch)
 
+	go func() {
+		//time.Sleep(1 * time.Microsecond)   // uncomment to timeout
+		ch <- "hi"
+	}()
+
+	select {
+	case msg = <-ch:
+		fmt.Println("Read from ch:", msg)
+	case <-time.After(1 * time.Microsecond):
+		fmt.Println("Timed out")
+	}
+}
+
+func Test_ticker_timeout_03(t *testing.T) {
+	var msg string
+	ch := make(chan string, 1)
+	defer close(ch)
+
+	timer := time.NewTimer(1 * time.Microsecond)
+	defer timer.Stop()
+
+	go func() {
+		//time.Sleep(1 * time.Microsecond) // uncomment to timeout
+		ch <- "hi"
+	}()
+
+	select {
+	case msg = <-ch:
+		fmt.Println("Read from ch:", msg)
+	case <-timer.C:
+		fmt.Println("Timed out")
+	}
 }

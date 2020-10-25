@@ -20,3 +20,5 @@
 #### 优秀书籍
 
 [Mastering_Go_ZH_CN](https://github.com/hantmac/Mastering_Go_ZH_CN/releases/tag/v1.0)
+[build-web-application-with-golang](https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/14.4.md)
+[concurrency-in-go](https://github.com/huahuayu/concurrency-in-go)
