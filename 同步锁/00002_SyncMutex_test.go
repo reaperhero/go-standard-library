@@ -36,6 +36,47 @@ func Test_Mutex_01(t *testing.T) {
 	fmt.Println("end main goroutine")
 }
 
+func Test_Mutex_02(t *testing.T) {
+	var count int
+	var lock sync.Mutex
+
+	increment := func() {
+		lock.Lock()
+		defer lock.Unlock()
+		count++
+		fmt.Printf("Incrementing: %d\n", count)
+	}
+
+	decrement := func() {
+		lock.Lock()
+		defer lock.Unlock()
+		count--
+		fmt.Printf("Decrementing: %d\n", count)
+	}
+
+	// Increment
+	var wg sync.WaitGroup
+	for i := 0; i <= 5; i++ {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			increment()
+		}()
+	}
+
+	// Decrement
+	for i := 0; i <= 5; i++ {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			decrement()
+		}()
+	}
+	wg.Wait()
+	fmt.Println("Arithmetic complete. Count: ",count)
+}
+
+
 // RWMutex（读写锁)
 //（1）RWMutex是单写多读锁，该锁可以加多个读锁或者一个写锁；
 //（2）读锁占用的情况下会阻止写，不会阻止读，多个 goroutine 可以同时获取读锁；
@@ -76,7 +117,5 @@ func Test_RWMutex_01(t *testing.T) {
 	wg.Wait()
 	fmt.Println("main goroutine end")
 }
-
-
 
 

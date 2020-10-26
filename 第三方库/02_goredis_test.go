@@ -3,14 +3,14 @@ package third
 import (
 	"fmt"
 	"github.com/go-redis/redis"
+	log "github.com/sirupsen/logrus"
+	"testing"
 	"time"
 )
 
-// 声明一个全局的rdb变量
 var rdb *redis.Client
 
 // 初始化连接
-
 func initClient() (err error) {
 	rdb = redis.NewClient(&redis.Options{
 		Addr:     "localhost:6379",
@@ -118,4 +118,26 @@ func redisExample3()  {
 	//INCR pipeline_counter
 	//EXPIRE pipeline_counts 3600
 	//EXEC
+}
+
+func Test_redis_pool_01(t *testing.T)  {
+	redisClient := redis.NewClient(&redis.Options{
+		Addr:         "127.0.0.1:6379",
+		Password:     "",
+		DB:           0,
+		PoolSize:     300,
+		MinIdleConns: 3,
+		PoolTimeout:  time.Second * 15,
+		ReadTimeout:  time.Second * 10,
+		WriteTimeout: time.Second * 10,
+	})
+	pong, err := redisClient.Ping().Result()
+	if err != nil {
+		log.WithError(err).WithField("pong", pong).Fatalln("redis error")
+	}
+	err = redisClient.Set("score", 100, 0).Err()
+	if err != nil {
+		fmt.Printf("set score failed, err:%v\n", err)
+		return
+	}
 }
