@@ -109,22 +109,19 @@ func main() {
 
 Send JSON
 ```
-func(c echo.Context) error {
-  u := &User{
-    Name:  "Jon",
-    Email: "jon@labstack.com",
-  }
-  return c.JSON(http.StatusOK, u)
+u := &User{
+Name:  "Jon",
+Email: "jon@labstack.com",
 }
+return c.JSON(http.StatusOK, u)
 ```
 
 Send File
 ```
-func(c echo.Context) error {
-  return c.File("<PATH_TO_YOUR_FILE>")
-}
-```
+return c.File("<PATH_TO_YOUR_FILE>")
 
+return c.Attachment("file.txt", "ok")
+```
 
 Send Stream
 ```

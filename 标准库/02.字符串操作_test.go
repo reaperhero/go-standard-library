@@ -60,12 +60,10 @@ func Test_String01(t *testing.T) {
 	fmt.Println(s1[5:])
 }
 
-
 // str := "Yinzhengjie"
 // fmt.Println(strings.EqualFold(str,"YINZHENGJIE")) //忽略大小写，但是如果除了大小写的差异之外，还有其他的差异就会判定为false.
 //fmt.Println(strings.HasPrefix(str,"Yinz"))         //判断字符串是否以Yinz开头
 //fmt.Println(strings.HasSuffix(str,"jie"))       //判断字符串是否以“到此一游”结尾
-
 
 // name := "yinzhengjie"
 // str := "尹正杰到此一游"
@@ -79,15 +77,30 @@ func Test_String01(t *testing.T) {
 // fmt.Println(strings.Trim(str,"#"))  //该方法可以去掉字符串左右两边的符号，但是字符串之间的是去不掉“#”的哟
 // strings.TrimSpace(str))  //该方法可以脱去两边的空格和换行符。
 
-func Test_string_03(t *testing.T)  {
+func Test_string_03(t *testing.T) {
 	str := `{"level":"info","msg":"\ufffd强军告警测\ufffd {\"sessionId\":\"haBhCtroXrRF7kQtJaOVYYeu\",\"alarmStatus\":\"1\",\"alarmType\":\"metric\",\"alarmObjInfo\":{\"region\":\"sh\",\"namespace\":\"qce/cvm\",\"dimensions\":{\"deviceName\":\"prod-myun-tx-mixer-tmp005\",\"objId\":\"5d62a04b-60f7-4587-aa6c-7c5efc630087\",\"objName\":\"10.200.1.2#3983277\",\"unInstanceId\":\"ins-0swvuraf\"}},\"alarmPolicyInfo\":{\"policyId\":\"policy-8dyufjzp\",\"policyType\":\"cvm_device\",\"policyName\":\"陈强军告警测试\",\"policyTypeCName\":\"云服务器-基础监控\",\"policyTypeEname\":\"\",\"conditions\":{\"metricName\":\"disk_usage\",\"metricShowName\":\"磁盘利用率 \",\"calcType\":\"\u003e\",\"calcValue\":\"10\",\"currentValue\":\"10.009\",\"unit\":\"%\",\"period\":\"300\",\"periodNum\":\"300\",\"alarmNotifyType\":\"singleAlarm\",\"alarmNotifyPeriod\":1}},\"firstOccurTime\":\"2020-10-21 13:10:00\",\"durationTime\":0,\"recoverTime\":\"0\"}\n","time":"2020-10-21T13:11:33+08:00"}`
-	result := strings.SplitAfterN(str,"{",10)
-	str1 := strings.Join(result[2:],"")
-	result = strings.SplitAfterN(str1,"}",10)
+	result := strings.SplitAfterN(str, "{", 10)
+	str1 := strings.Join(result[2:], "")
+	result = strings.SplitAfterN(str1, "}", 10)
 	str2 := []string{"{"}
-	for i := 0;i < len(result)-2;i++ {
-		str2 = append(str2,result[i])
+	for i := 0; i < len(result)-2; i++ {
+		str2 = append(str2, result[i])
 	}
-	msg := strings.Replace(strings.Join(str2,""),"\\","",-1)
+	msg := strings.Replace(strings.Join(str2, ""), "\\", "", -1)
 	fmt.Println(msg)
+}
+
+func Test_string_04(t *testing.T) {
+	// 原生拼接字符串的方式会导致大量的string创建、销毁和内存分配，Builder为了解决性能问题，从1.10引入
+	ss := []string{
+		"A",
+		"B",
+		"C",
+	}
+	var b strings.Builder
+	for _, s := range ss {
+		fmt.Fprint(&b, s)
+	}
+
+	print(b.String())
 }

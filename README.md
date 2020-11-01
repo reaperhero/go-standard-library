@@ -28,6 +28,18 @@
 [snowflake](https://github.com/bwmarrin/snowflake)
 [go-awesome](https://github.com/shockerli/go-awesome)
 [go-nats](github.com/nats-io/go-nats)
+[go-nsq](github.com/nsqio/go-nsq)
+[go-hashids](github.com/speps/go-hashids)
+[msgpack](github.com/vmihailenco/msgpack)
+[压测hey](https://github.com/rakyll/hey)
+[opentracing](https://github.com/opentracing/opentracing-go)
+[go-docker](https://github.com/containerd/containerd)
+[gopay](https://github.com/iGoogle-ink/gopay)
+[ozzo-dbx](https://github.com/go-ozzo/ozzo-dbx)
+[纯真ip库](https://github.com/freshcn/qqwry)
+[skiplist跳表](github.com/gansidui/skiplist)
+[web handler测试](github.com/appleboy/gofight)
+
 
 
 #### 优秀书籍
@@ -36,3 +48,10 @@
 [build-web-application-with-golang](https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/14.4.md)
 [concurrency-in-go](https://github.com/huahuayu/concurrency-in-go)
 [腾讯云官方文档](https://github.com/tencentyun/qcloud-documents)
+[go101](https://github.com/go101/)
+
+
+
+#### go 工具
+
+[代码检测工具golangci-lint](https://github.com/golangci/golangci-lint)
