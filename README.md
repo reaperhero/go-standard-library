@@ -38,7 +38,8 @@
 [ozzo-dbx](https://github.com/go-ozzo/ozzo-dbx)
 [纯真ip库](https://github.com/freshcn/qqwry)
 [skiplist跳表](github.com/gansidui/skiplist)
-[web handler测试](github.com/appleboy/gofight)
+[web handler测试](https://github.com/appleboy/gofight)
+[dingding](github.com/CatchZeng/dingtalk)
 
 
 
@@ -48,6 +49,7 @@
 [build-web-application-with-golang](https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/14.4.md)
 [concurrency-in-go](https://github.com/huahuayu/concurrency-in-go)
 [腾讯云官方文档](https://github.com/tencentyun/qcloud-documents)
+[slides](https://github.com/TritonHo/slides)
 [go101](https://github.com/go101/)
 
 
@@ -55,3 +57,14 @@
 #### go 工具
 
 [代码检测工具golangci-lint](https://github.com/golangci/golangci-lint)
+
+#### cicd
+
+[argo](https://github.com/argoproj/argo/tree/master/examples)
+[packer创建镜像](https://www.packer.io/docs/commands/build)
+[Spinnaker](https://github.com/spinnaker/spinnaker)
+
+
+#### k8s
+
+[vault secret加密](https://www.qikqiak.com/post/deploy-vault-on-k8s/
